@@ -59,4 +59,16 @@ channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
+
+function success(pos) {
+  let coords = {
+      long: pos.coords.longitude,
+      lat: pos.coords.latitude
+  }
+  console.log("sending coords:", coords)
+  channel.push("position", coords)
+}
+
+navigator.geolocation.watchPosition(success, err => console.error(err))
+
 export default socket
